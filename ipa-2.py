@@ -3,7 +3,6 @@
 
 # In[104]:
 
-
 def shift_letter(letter, shift):
     '''Shift Letter.
     5 points.
@@ -36,21 +35,18 @@ def shift_letter(letter, shift):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    if letter.isalpha():
-        if (ord(letter) + shift)>90:
-            shifted_letter=chr(((ord(letter) + shift)-26))
+    alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    if letter==" ":
+        if isinstance(shift,int):
+            result=" "
         else:
-            shifted_letter = chr(ord(letter) + shift) 
+            result=" "
     else:
-        shifted_letter = " "
-        
-    return str(shifted_letter)
+        final_letter=(alphabet.find(letter)+int(shift))%26
+        result=alphabet[final_letter]
+    
 
-shift_letter("A",5)
-
-
-# In[119]:
-
+    return result
 
 def caesar_cipher(message, shift):
     '''Caesar Cipher.
@@ -72,26 +68,17 @@ def caesar_cipher(message, shift):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    shifted_message = ""
-
+    alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    result=""
     for char in message:
-        if char.isalpha():
-            if (ord(char) + shift)>90:
-                shifted_char = chr(((ord(char) + shift)-26))
-            else:
-                shifted_char = chr(ord(char) + shift)
+        if char==" ":
+            result+=" "
         else:
-            shifted_char = char
-
-        shifted_message += shifted_char
-
-    return shifted_message
-
-caesar_cipher("ABCD", 5)
+            shifted= (alphabet.find(char)+int(shift))%26
+            result+=alphabet[shifted]
 
 
-# In[127]:
-
+    return result
 
 def shift_by_letter(letter, letter_shift):
     '''Shift By Letter.
@@ -121,21 +108,15 @@ def shift_by_letter(letter, letter_shift):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    
-    if letter.isalpha() and letter_shift.isalpha():
-        shift_value = ord(letter_shift) - ord('A')
-        if (ord(letter) + shift_value)>90:
-            shifted_letter=chr(((ord(letter) + shift_value)-26))
-        else:
-            shifted_letter = chr(ord(letter) + shift_value)
-        return print(shifted_letter)
-    else: 
-        return print(letter)
-shift_by_letter("C","Y")
-
-
-# In[132]:
-
+    alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    if letter==" ":
+        result=" "
+    else:
+        shift=alphabet.find(letter_shift)
+        final_letter=(alphabet.find(letter)+shift)%26
+        result=alphabet[final_letter]
+ 
+    return result
 
 def vigenere_cipher(message, key):
     '''Vigenere Cipher.
@@ -168,23 +149,19 @@ def vigenere_cipher(message, key):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    extended = key * (len(message) // len(key)) + key[:len(message) % len(key)]
-    encrypted_message = ""
-    for i in range(len(message)):
-        if message[i] == " ":
-            encrypted_message += " "
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    result=""
+    for nth_char in range (0,len(message)):
+        shifted=message[nth_char]
+        shiftee=key[(nth_char%len(key))]
+        if shifted==" ":
+            result+=" "
         else:
-            key_char = ord(extended[i]) - ord("A")
-            if (ord(message[i]) + key_char) > 90:
-                encrypted_char = chr((ord(message[i]) + key_char) - 26)
-            else:
-                encrypted_char = chr(ord(message[i]) + key_char)
-
-            encrypted_message += encrypted_char
-
-    return encrypted_message
-
-vigenere_cipher("ZZZZZ", "AA")
+            shiftnum=alphabet.find(shiftee)
+            final_nth_letter=(alphabet.find(shifted)+shiftnum)%26
+            result+=alphabet[final_nth_letter]
+  
+    return result
 
 
 # In[135]:
@@ -251,10 +228,7 @@ def scytale_cipher(message, shift):
         encoded_message += message[index]
 
     return encoded_message
-
-scytale_cipher("INFORMATION_AGE", 4)
-
-
+    
 # In[134]:
 
 
@@ -294,6 +268,3 @@ def scytale_decipher(message, shift):
         decoded_message += message[index]
 
     return decoded_message
-
-scytale_decipher("IMNNA_FTAOIGROE", 3)
-
