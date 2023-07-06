@@ -81,14 +81,13 @@ def material_waste(total_material, material_units, num_jobs, job_consumption):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
     x_material = str(total_material-(num_jobs*job_consumption))
     str1 = x_material
     str2 = material_units
+    return (str1+str2)
     
-    return print(str1+str2)
-
-material_waste(100, "kg", 10, 2)
+result = material_waste(100, "kg", 10, 2)
+print(result)
 
 
 # In[5]:
@@ -122,7 +121,6 @@ def interest(principal, rate, periods):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
     statement=principal+(principal*rate*periods)
     return int(statement)
 
@@ -181,9 +179,6 @@ def body_mass_index(weight, height):
 
 
 body_mass_index(125,[5,3])
-
-
-# In[ ]:
 
 
 
