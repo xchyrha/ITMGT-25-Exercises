@@ -127,59 +127,40 @@ def tic_tac_toe(board):
     '''
     # Replace `pass` with your code.
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    # Check rows
     for row in board:
         if row == ['X', 'X', 'X'] or row == ['X', 'X', 'X','X'] or row == ['X', 'X', 'X', 'X', 'X'] or row == ['X', 'X', 'X', 'X', 'X', 'X']:
-            return "X wins"
+            return "X"
         elif row == ['O', 'O', 'O'] or row == ['O', 'O', 'O', 'O'] or row == ['O', 'O', 'O', 'O', 'O'] or row == ['O', 'O', 'O', 'O','O','O'] :
-            return "O wins"
+            return "O"
 
-    # Check columns
     for col in range(len(board[0])):
         if all(board[row][col] == 'X' for row in range(len(board))):
-            return "X wins"
+            return "X"
         elif all(board[row][col] == 'O' for row in range(len(board))):
-            return "O wins"
-
-    # Check diagonals
+            return "O"
+            
     if len(board[0])==3:
         if board[0][0] == board[1][1] == board[2][2] == 'X' or board[0][2] == board[1][1] == board[2][0] == 'X':
-            return "X wins"
+            return "X"
         elif board[0][0] == board[1][1] == board[2][2] == 'O' or board[0][2] == board[1][1] == board[2][0] == 'O':
-            return "O wins"
+            return "O"
     elif len(board[0])==4:
         if board[0][0] == board[1][1] == board[2][2] == board[3][3]=='X' or board[0][3] == board[1][2] == board[2][1] == board[3][0]=='X':
-            return "X wins"
+            return "X"
         elif board[0][0] == board[1][1] == board[2][2] == board[3][3]=='O' or board[0][3] == board[1][2] == board[2][1] == board[3][0]=='O':
-            return "O wins"
+            return "O"
     elif len(board[0])==5:
         if board[0][0] == board[1][1] == board[2][2] == board[3][3]==board[4][4]=='X' or board[0][4] == board[1][3] == board[2][2] == board[3][1]==board[4][0]=='X':
-            return "X wins"
+            return "X"
         elif board[0][0] == board[1][1] == board[2][2] == board[3][3]==board[4][4]=='O' or board[0][4] == board[1][3] == board[2][2] == board[3][1]==board[4][0]=='O':
-            return "O wins"
+            return "O"
     elif len(board[0])==6:
         if board[0][0] == board[1][1] == board[2][2] == board[3][3]==board[4][4]==board[5][5]=='X' or board[0][5] == board[1][4] == board[2][3] == board[3][2]==board[4][1]==board[5][0]=='X':
-            return "X wins"
+            return "X"
         elif board[0][0] == board[1][1] == board[2][2] == board[3][3]==board[4][4]==board[5][5]=='O' or board[0][5] == board[1][4] == board[2][3] == board[3][2]==board[4][1]==board[5][0]=='O':
-            return "O wins"
+            return "O"
 
-    return "no one wins"
-
-
-# In[20]:
-
-
-#For testing
-
-board = [
-    ['X', 'O', 'X'],
-    ['O', 'X', 'O'],
-    ['X', 'O', 'X']
-]
-
-tic_tac_toe(board)
-
-
+    return "NO WINNER"
 # In[21]:
 
 
@@ -227,38 +208,31 @@ def eta(first_stop, second_stop, route_map):
     for route in route_map.keys():
         counter+=1
         if route[0]==first_stop:
+            #find the index
             index_start+=counter
         if route[1]==second_stop:
             index_end+=counter
-    
-    routes = list(route_map.items())
-    subroute = routes[index_start - 1:index_end]
-    new_map.update(subroute)
 
-    for item in dict(new_map.items()):
-        mins = new_map[item]["travel_time_mins"]
-        traveltime+= mins
+    if index_start<=index_end:
+        routes = list(route_map.items())
+        subroute = routes[index_start - 1:index_end]
+        new_map.update(subroute)
+
+        for item in new_map.items():
+            mins = item[1]["travel_time_mins"]
+            traveltime += mins
+        return traveltime
+   
+    elif index_start>index_end:
+        routes = list(route_map.items())
+        index_end=index_end+len(routes)
+        subroute = routes[index_start - 1:len(routes)]
+        new_map.update(subroute)
+        excess_subroute=routes[0:index_end-len(routes)]
+        new_map.update(excess_subroute)
         
-    return traveltime
-
-
-# In[25]:
-
-
-#For testing
-
-route_map = {
-     ("upd","admu"):{
-         "travel_time_mins":10
-     },
-     ("admu","dlsu"):{
-         "travel_time_mins":35
-     },
-     ("dlsu","upd"):{
-         "travel_time_mins":55
-     }
-}
-
-
-eta("upd", "admu", route_map)
-
+        for item in new_map.items():
+            mins = item[1]["travel_time_mins"]
+            traveltime += mins
+            
+        return traveltime
